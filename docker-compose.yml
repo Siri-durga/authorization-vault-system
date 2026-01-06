@@ -1,0 +1,20 @@
+version: "3.8"
+
+services:
+  blockchain:
+    image: node:18-alpine
+    working_dir: /app
+    volumes:
+      - .:/app
+    command: npx hardhat node
+    ports:
+      - "8545:8545"
+
+  deployer:
+    image: node:18-alpine
+    working_dir: /app
+    volumes:
+      - .:/app
+    depends_on:
+      - blockchain
+    command: sh ./docker/entrypoint.sh
